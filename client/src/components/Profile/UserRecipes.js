@@ -7,6 +7,7 @@ import {
   GET_CURRENT_USER
 } from '../../queries'
 import { Link } from 'react-router-dom'
+import Spinner from '../Spinner'
 
 const handleDelete = deleteUserRecipe =>
   window.confirm('Are you sure you want to delete this recipe?')
@@ -17,7 +18,7 @@ function UserRecipes({ username }) {
   return (
     <Query query={GET_USER_RECIPES} variables={{ username }}>
       {({ data: { getUserRecipes }, loading, error }) => {
-        if (loading) return <div>Loading...</div>
+        if (loading) return <Spinner />
         if (error) return <div>Error</div>
         return (
           <ul>

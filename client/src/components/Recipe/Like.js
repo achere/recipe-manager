@@ -57,6 +57,7 @@ function Like({ session, id }) {
           {likeRecipe =>
             username ? (
               <button
+                className="like-button"
                 onClick={() => {
                   liked ? unlikeRecipe() : likeRecipe()
                   setLiked(!liked)

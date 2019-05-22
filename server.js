@@ -13,6 +13,9 @@ const Recipe = require('./models/Recipe')
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
+    autoReconnect: true,
+    reconnectTries: Number.MAX_VALUE,
+    reconnectInterval: 10000,
     useCreateIndex: true
   })
   .then(() => {
@@ -40,7 +43,7 @@ app.use(async (req, res, next) => {
       const currentUser = await jwt.verify(token, process.env.SECRET)
       req.currentUser = currentUser
     } catch (e) {
-      console.error(e)
+      console.error(e.message)
     }
   }
   next()
