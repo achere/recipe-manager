@@ -8,7 +8,8 @@ import Spinner from '../Spinner'
 function RecipePage({
   match: {
     params: { id }
-  }
+  },
+  refetch
 }) {
   return (
     <Query query={GET_RECIPE} variables={{ id }}>
@@ -58,7 +59,7 @@ function RecipePage({
                 className="recipe-instructions"
                 dangerouslySetInnerHTML={{ __html: instructions }}
               />
-              <Like id={id} />
+              <Like id={id} refetch={refetch} />
             </div>
           </div>
         )

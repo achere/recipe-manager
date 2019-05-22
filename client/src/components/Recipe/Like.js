@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 import withSession from '../withSession'
 import { Mutation } from 'react-apollo'
-import { LIKE_RECIPE, GET_RECIPE, UNLIKE_RECIPE } from '../../queries'
+import {
+  LIKE_RECIPE,
+  GET_RECIPE,
+  UNLIKE_RECIPE,
+  GET_CURRENT_USER
+} from '../../queries'
 
 const updateLike = id => (cache, { data: { likeRecipe } }) => {
   const { getRecipe } = cache.readQuery({
@@ -29,7 +34,7 @@ const updateUnlike = id => (cache, { data: { unlikeRecipe } }) => {
   })
 }
 
-function Like({ session, id }) {
+function Like({ session, id, refetch }) {
   const [liked, setLiked] = useState(
     () =>
       (session &&
@@ -47,12 +52,18 @@ function Like({ session, id }) {
       mutation={UNLIKE_RECIPE}
       variables={{ id, username }}
       update={updateUnlike(id)}
+      refetchQueries={() => [
+        { query: GET_CURRENT_USER, variables: { username } }
+      ]}
     >
       {unlikeRecipe => (
         <Mutation
           mutation={LIKE_RECIPE}
           variables={{ id, username }}
           update={updateLike(id)}
+          refetchQueries={() => [
+            { query: GET_CURRENT_USER, variables: { username } }
+          ]}
         >
           {likeRecipe =>
             username ? (
@@ -61,6 +72,7 @@ function Like({ session, id }) {
                 onClick={() => {
                   liked ? unlikeRecipe() : likeRecipe()
                   setLiked(!liked)
+                  refetch()
                 }}
               >
                 {liked ? 'Unlike' : 'Like'}
