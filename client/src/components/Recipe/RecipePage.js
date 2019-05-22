@@ -14,8 +14,13 @@ function RecipePage({
   return (
     <Query query={GET_RECIPE} variables={{ id }}>
       {({ data, loading, error }) => {
-        if (loading) return <Spinner />
-        if (error) return <div>Error</div>
+        if (loading)
+          return (
+            <div className="App">
+              <Spinner />
+            </div>
+          )
+        if (error) return <div className="App">Error</div>
         const {
           name,
           imageUrl,
