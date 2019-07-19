@@ -2,6 +2,17 @@
   text-align: center;
 }
 
+button:disabled {
+  background-color: lightgrey;
+  border: none;
+}
+
+button:disabled:hover {
+  background-color: lightgrey;
+  border: none;
+  cursor: not-allowed;
+}
+
 nav {
   text-align: center;
   padding-bottom: 0.2em;
