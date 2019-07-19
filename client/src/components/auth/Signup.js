@@ -34,9 +34,7 @@ export class SignUp extends Component {
 
   validateForm = () => {
     const { username, email, password, passwordConfirmation } = this.state
-    return (
-      !username || !email || !password || !password === !passwordConfirmation
-    )
+    return !username || !email || !password || password !== passwordConfirmation
   }
 
   render() {
